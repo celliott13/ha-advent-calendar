@@ -160,6 +160,3 @@ pytest                      # backend tests
 python -m http.server 8765  # then open http://127.0.0.1:8765/dev/index.html?today=2026-12-03
 ```
 The dev page mocks Home Assistant. Query options: `today=YYYY-MM-DD`, `design=winter|santa|menorah`, `order=random`, `sizes=varied`, `panel=1` (Panel-view fit), `store=<name>`. The mock parent PIN is `1234`.
-
-## Before publishing
-Put your name in `LICENSE`, add screenshots to this README, and publish a GitHub release tagged with the version (HACS installs from releases).
