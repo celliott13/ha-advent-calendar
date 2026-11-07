@@ -1,0 +1,54 @@
+door_opened:
+  target:
+    entity:
+      integration: advent_calendar
+      domain: sensor
+
+door_opened_day:
+  target:
+    entity:
+      integration: advent_calendar
+      domain: sensor
+  fields:
+    day:
+      required: true
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 25
+          mode: box
+
+door_opened_on_date:
+  target:
+    entity:
+      integration: advent_calendar
+      domain: sensor
+  fields:
+    date:
+      required: true
+      selector:
+        date:
+
+door_waiting_on_date:
+  target:
+    entity:
+      integration: advent_calendar
+      domain: sensor
+  fields:
+    date:
+      required: true
+      selector:
+        date:
+
+finale_opened:
+  target:
+    entity:
+      integration: advent_calendar
+      domain: sensor
+
+custom_door_opened:
+  target:
+    entity:
+      integration: advent_calendar
+      domain: sensor

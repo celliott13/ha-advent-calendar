@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{margin:0;padding:12px;background:#222;font-family:sans-serif}#c{max-width:760px;margin:auto}</style></head>
+<body><div id="c"></div>
+<script src="../custom_components/advent_calendar/www/advent-calendar-card.js"></script>
+<script>
+// Mock of the integration's websocket API (mirrors manager.py rules). localStorage stands in for HA storage.
+const q = new URLSearchParams(location.search);
+const TODAY = q.get("today") || "2026-12-03", PIN = "1234";
+const KEY = "mock_advent_" + (q.get("store") || "default");
+const DAYS = {advent: 25, menorah: 8};
+let db = JSON.parse(localStorage.getItem(KEY) || "null") || {settings:{design:q.get("design")||"winter",order:"sequential",sizes:"uniform",shuffle_seed:1,title:""},opened:{},custom:{},activities:{}};
+if (q.get("design") && !localStorage.getItem(KEY)) db.settings.design = q.get("design");
+if (q.get("order")) db.settings.order = q.get("order"); if (q.get("sizes")) db.settings.sizes = q.get("sizes");
+const save = () => localStorage.setItem(KEY, JSON.stringify(db));
+const listeners = [];
+const pad = n => String(n).padStart(2,"0");
+function build(family){ const y=+TODAY.slice(0,4);
+  if(family==="menorah"){ const s=new Date(Date.UTC(2026,11,4)); return Array.from({length:8},(_,i)=>({day:i+1,date:new Date(s.getTime()+i*864e5).toISOString().slice(0,10)})); }
+  return Array.from({length:25},(_,i)=>({day:i+1,date:`${y}-12-${pad(i+1)}`})); }
+const fam = () => db.settings.design==="menorah"?"menorah":"advent";
+const state = (parent) => { const f=fam(), y=TODAY.slice(0,4), op=db.opened[f+":"+y]||[];
+  return {settings:db.settings,activities:{advent:db.activities.advent??null,menorah:db.activities.menorah??null},family:f,year:+y,today:TODAY,is_parent:!!parent,days:build(f).map(d=>{const c=db.custom[f+":"+d.day];
+    const o={...d,opened:op.includes(d.day),available:d.date<=TODAY,has_custom:!!c}; if(c&&(o.opened||parent)) o.custom=c; return o;})}; };
+const fire = () => listeners.forEach(l=>l());
+window.__calls = [];
+let fails = 0; const bad = (code,message) => ({code,message});
+function checkPin(pin){ if(pin!==PIN){ fails++; throw bad("invalid_pin","Incorrect PIN"); } fails=0; }
+const hass = {
+  callWS: async (m) => { window.__calls.push(m.type); const t=m.type.split("/")[1], f=fam(), y=TODAY.slice(0,4);
+    if(t==="get_state"){ if("pin" in m) checkPin(m.pin); return state("pin" in m); }
+    if(t==="verify_pin"){ checkPin(m.pin); return {ok:true}; }
+    if(t==="open_door"){ const d=build(f).find(x=>x.day===m.day); if(d.date>TODAY) throw {message:"not_yet"};
+      const k=f+":"+y; db.opened[k]=db.opened[k]||[]; if(!db.opened[k].includes(m.day)) db.opened[k].push(m.day); save(); fire(); return {}; }
+    checkPin(m.pin);
+    if(t==="set_settings"){ const {type,reshuffle,...c}=m; Object.assign(db.settings,c); if(reshuffle) db.settings.shuffle_seed=Math.floor(Math.random()*1e9); save(); fire(); return {}; }
+    if(t==="set_custom"){ db.custom[m.family+":"+m.day]={title:m.title,message:m.message,emoji:m.emoji||"🎁"}; save(); fire(); return {}; }
+    if(t==="set_activities"){ if(m.activities===null) delete db.activities[m.family]; else db.activities[m.family]=m.activities; save(); fire(); return {}; }
+    if(t==="delete_custom"){ delete db.custom[m.family+":"+m.day]; save(); fire(); return {}; }
+    if(t==="reset"){ for(const k of Object.keys(db.opened)) if(k.endsWith(":"+y)) delete db.opened[k]; save(); fire(); return {}; } },
+  connection:{subscribeEvents: async (cb)=>{listeners.push(cb); return ()=>{}; }}};
+const el = document.createElement("advent-calendar-card"); el.setConfig({});
+const host = document.getElementById("c");
+if (q.get("panel")) { const pv = document.createElement("hui-panel-view"); pv.style.cssText = "display:block;height:calc(100vh - 24px);position:relative"; host.style.maxWidth = "none"; host.appendChild(pv); pv.appendChild(el); } else host.appendChild(el); el.hass = hass; window.__card = el;
+</script></body></html>

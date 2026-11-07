@@ -1,0 +1,10 @@
+{
+  "triggers": {
+    "door_opened": { "trigger": "mdi:gift-open" },
+    "door_opened_day": { "trigger": "mdi:gift-open" },
+    "door_opened_on_date": { "trigger": "mdi:calendar-check" },
+    "door_waiting_on_date": { "trigger": "mdi:calendar-clock" },
+    "finale_opened": { "trigger": "mdi:party-popper" },
+    "custom_door_opened": { "trigger": "mdi:gift" }
+  }
+}

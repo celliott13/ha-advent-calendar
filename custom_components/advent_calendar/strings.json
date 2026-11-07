@@ -1,0 +1,103 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Advent Calendar",
+        "description": "Choose a parent PIN (4-8 digits). It protects the calendar settings and custom doors, and works on any Home Assistant account. After setup, add the card `custom:advent-calendar-card` to a dashboard.",
+        "data": {
+          "pin": "Parent PIN"
+        }
+      }
+    },
+    "error": {
+      "invalid_pin": "The PIN must be 4 to 8 digits."
+    },
+    "abort": {
+      "already_configured": "Advent Calendar is already set up."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Change parent PIN",
+        "description": "Enter a new parent PIN (4-8 digits).",
+        "data": {
+          "pin": "New parent PIN"
+        }
+      }
+    },
+    "error": {
+      "invalid_pin": "The PIN must be 4 to 8 digits."
+    }
+  },
+  "device_automation": {
+    "trigger_type": {
+      "door_opened": "A door is opened",
+      "door_opened_day": "The door for a specific day is opened",
+      "finale_opened": "The final door is opened (Christmas / last night of Hanukkah)",
+      "custom_door_opened": "A parent-written door is opened",
+      "door_opened_on_date": "The door for a chosen date is opened",
+      "door_waiting_on_date": "The door for a chosen date is waiting to be opened"
+    },
+    "extra_fields": {
+      "day": "Day number",
+      "date": "Calendar date"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "doors_opened": {
+        "name": "Doors opened"
+      }
+    },
+    "binary_sensor": {
+      "door_waiting": {
+        "name": "Door waiting"
+      }
+    }
+  },
+  "triggers": {
+    "door_opened": {
+      "name": "Advent Calendar door opened",
+      "description": "Triggers when any door of the Advent Calendar is opened."
+    },
+    "door_opened_day": {
+      "name": "Advent Calendar door for a day opened",
+      "description": "Triggers when the door with a given day number is opened.",
+      "fields": {
+        "day": {
+          "name": "Day number",
+          "description": "Day number of the door, for example 25 for Christmas."
+        }
+      }
+    },
+    "door_opened_on_date": {
+      "name": "Advent Calendar door for a date opened",
+      "description": "Triggers when the door dated on a chosen calendar date is opened, on that date or any later day.",
+      "fields": {
+        "date": {
+          "name": "Calendar date",
+          "description": "The date printed on the door."
+        }
+      }
+    },
+    "door_waiting_on_date": {
+      "name": "Advent Calendar door for a date is waiting",
+      "description": "Triggers just after midnight on a chosen date, when that date's door becomes available to open.",
+      "fields": {
+        "date": {
+          "name": "Calendar date",
+          "description": "The date printed on the door."
+        }
+      }
+    },
+    "finale_opened": {
+      "name": "Advent Calendar finale opened",
+      "description": "Triggers when the last door is opened (Christmas Day, or the 8th night of Hanukkah)."
+    },
+    "custom_door_opened": {
+      "name": "Advent Calendar parent-written door opened",
+      "description": "Triggers when a door with a parent-written surprise is opened."
+    }
+  }
+}

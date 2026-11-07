@@ -1,0 +1,13 @@
+{
+  "domain": "advent_calendar",
+  "name": "Advent Calendar",
+  "codeowners": ["@celliott13"],
+  "config_flow": true,
+  "dependencies": ["http", "frontend", "websocket_api"],
+  "documentation": "https://github.com/celliott13/ha-advent-calendar",
+  "integration_type": "service",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/celliott13/ha-advent-calendar/issues",
+  "requirements": ["pyluach==2.2.0"],
+  "version": "2026.11.0"
+}
