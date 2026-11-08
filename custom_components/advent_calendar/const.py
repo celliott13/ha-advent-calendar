@@ -1,7 +1,7 @@
 """Constants for Advent Calendar."""
 
 DOMAIN = "advent_calendar"
-VERSION = "2026.11.0"
+VERSION = "2026.11.1"
 
 STORAGE_KEY = DOMAIN
 STORAGE_VERSION = 1
