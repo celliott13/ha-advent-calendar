@@ -18,8 +18,9 @@ A family-dashboard **Advent calendar** (Dec 1-25) and **Hanukkah calendar** (8 n
 ## Install (HACS)
 1. HACS > three-dot menu > **Custom repositories** > add `https://github.com/celliott13/ha-advent-calendar`, category **Integration**.
 2. Install **Advent Calendar**, then **restart Home Assistant**.
-3. **Settings > Devices & services > Add integration > Advent Calendar.** You will choose a **parent PIN** (4-8 digits).
-4. Hard-refresh your browser (Ctrl+Shift+R) so it loads the card.
+3. Go to Settings > Devices & services > **Add integration**, choose **Advent Calendar**, and choose a **parent PIN** (4-8 digits).
+4. **Refresh your browser once** (Ctrl+F5, or fully reopen the Companion app / wall-panel browser). Home Assistant only loads a new card's file when a page loads, so until you do, the editor says "Custom element doesn't exist". This is only needed after the first install.
+5. Add the card (see below).
 
 ## Add it to a dashboard (recommended: a Panel view)
 For a big, fit-to-screen calendar (great for a wall tablet):
@@ -151,7 +152,7 @@ The integration also provides a **Doors opened** sensor (count, with the list of
 Each door is dated by **night**: door 1 opens on the evening before the first full day of Hanukkah (when the first candle is lit), and door 8 on the 8th night. Dates are computed from the Hebrew calendar for the current year.
 
 ## Versioning
-Versions follow Home Assistant's scheme: `YEAR.MONTH.ITERATION` (this release: **2026.11.0**). Tag releases with the same string, e.g. `2026.11.0`.
+Versions follow Home Assistant's scheme: `YEAR.MONTH.ITERATION` (this release: **2026.11.1**). Tag releases with the same string, e.g. `2026.11.1`.
 
 ## Development
 ```
