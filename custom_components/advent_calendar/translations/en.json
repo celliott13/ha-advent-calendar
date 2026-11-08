@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Advent Calendar",
-        "description": "Choose a parent PIN (4-8 digits). It protects the calendar settings and custom doors, and works on any Home Assistant account. After setup, add the card `custom:advent-calendar-card` to a dashboard.",
+        "description": "Choose a parent PIN (4-8 digits). It protects the calendar settings and custom doors, and works on any Home Assistant account. After setup, refresh your browser once (Ctrl+F5, or reopen the app), then add the card `custom:advent-calendar-card` to a dashboard.",
         "data": {
           "pin": "Parent PIN"
         }
