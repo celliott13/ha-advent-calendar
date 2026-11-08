@@ -4,7 +4,7 @@
  * Parent mode is protected by the PIN chosen when the integration was set up (enforced server-side).
  * All artwork and animation is original, drawn with SVG/CSS/canvas. No external assets.
  */
-const AC_VERSION = "2026.11.0";
+const AC_VERSION = "2026.11.1";
 
 /* ------------------------------------------------------------------ content */
 const KIND_ICON = { joke: "🎭", fact: "💡", activity: "✨", fun: "🎉" };
